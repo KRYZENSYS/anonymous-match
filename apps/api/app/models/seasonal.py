@@ -1,4 +1,4 @@
-"""Seasonal, travel, charity, special modes"""
+"""Seasonal, travel, charity, modes"""
 from sqlalchemy import Column, BigInteger, String, Text, Boolean, DateTime, Integer, ForeignKey, JSON, Float
 from sqlalchemy.sql import func
 from app.db.base import Base
@@ -61,7 +61,7 @@ class ABTest(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(128), unique=True, nullable=False)
     description = Column(Text)
-    variants = Column(JSON, nullable=False)  # [{"name": "A", "weight": 0.5}, ...]
+    variants = Column(JSON, nullable=False)
     metrics = Column(JSON, default=list)
     is_active = Column(Boolean, default=True)
     starts_at = Column(DateTime, default=func.now())
@@ -90,7 +90,7 @@ class ABTestEvent(Base):
 class SubscriptionPlan(Base):
     __tablename__ = "subscription_plans"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    code = Column(String(32), unique=True, nullable=False)  # plus, gold, platinum, vip_diamond
+    code = Column(String(32), unique=True, nullable=False)
     name = Column(String(64), nullable=False)
     tier = Column(Integer, default=1)
     price_stars = Column(Integer, nullable=False)
@@ -108,7 +108,7 @@ class AdCampaign(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(128), nullable=False)
     advertiser = Column(String(128))
-    type = Column(String(32), default="banner")  # banner, sponsored, native
+    type = Column(String(32), default="banner")
     image_url = Column(Text, nullable=True)
     target_url = Column(Text, nullable=True)
     target_regions = Column(JSON, default=list)
