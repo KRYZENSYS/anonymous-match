@@ -1,3 +1,9 @@
+# Env
+.env
+.env.local
+.env.production
+*.env
+
 # Python
 __pycache__/
 *.py[cod]
@@ -8,61 +14,53 @@ __pycache__/
 venv/
 env/
 .pytest_cache/
-.mypy_cache/
-.ruff_cache/
-htmlcov/
 .coverage
+htmlcov/
 *.egg-info/
 dist/
 build/
+.eggs/
 
-# Node / Next.js
+# Node
 node_modules/
 .next/
 out/
-.turbo/
-*.tsbuildinfo
 .pnpm-store/
+.npm/
+.pnp.*
 
-# Env
-.env
-.env.local
-.env.*.local
-!.env.example
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Database
 *.db
-*.sqlite
 *.sqlite3
+*.sql
 
-# Logs
-*.log
-logs/
-
-# Media (uploaded files)
-media/
-uploads/
-!media/.gitkeep
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
-
-# OS
-Thumbs.db
-
-# SSL
-nginx/ssl/*.pem
-nginx/ssl/*.key
-nginx/ssl/*.crt
+# Media (user uploads)
+/media/
+/uploads/
 
 # Docker
 .docker/
+docker-data/
 
-# Coverage
-coverage/
-.nyc_output/
+# OS
+Thumbs.db
+desktop.ini
+
+# Build artifacts
+*.tsbuildinfo
+next-env.d.ts
