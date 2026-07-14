@@ -1,22 +1,19 @@
-"""Match, Like, Swipe sxemalari."""
-from __future__ import annotations
-
+"""Match schemas."""
 from datetime import datetime
-from typing import Optional, List, Literal
-from pydantic import Field
+from typing import Literal, Optional
+from pydantic import BaseModel
 
-from app.schemas.auth import BaseSchema
 from app.schemas.user import ProfilePublic
 
 
-class SwipeRequest(BaseSchema):
+class SwipeRequest(BaseModel):
     target_user_id: int
-    action: Literal["like", "superlike", "pass"]
+    action: Literal["like", "pass", "superlike"]
 
 
-class SwipeResponse(BaseSchema):
+class SwipeResponse(BaseModel):
     success: bool
-    is_match: bool = False
+    is_match: bool
     match_id: Optional[int] = None
     chat_id: Optional[int] = None
     remaining_likes: int
@@ -24,24 +21,25 @@ class SwipeResponse(BaseSchema):
     message: Optional[str] = None
 
 
-class MatchPublic(BaseSchema):
+class MatchPublic(BaseModel):
     id: int
     matched_at: datetime
     is_new: bool
     other_user: ProfilePublic
     last_message_at: Optional[datetime] = None
     last_message_preview: Optional[str] = None
-    unread_count: int = 0
-    is_first_message: bool = True
+    unread_count: int
+    is_first_message: bool
 
 
-class MatchListResponse(BaseSchema):
-    matches: List[MatchPublic]
+class MatchListResponse(BaseModel):
+    matches: list[MatchPublic]
     total: int
 
 
-class LikeReceived(BaseSchema):
+class LikeReceived(BaseModel):
+    id: int
     from_user: ProfilePublic
-    is_super_like: bool
-    is_mutual: bool
+    action: str
     created_at: datetime
+    is_mutual: bool
