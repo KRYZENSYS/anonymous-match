@@ -1,4 +1,4 @@
-"""Advanced features models - calls, AR, photo scoring, translation, video streams"""
+"""Advanced features - calls, AI, AR, photos, translation"""
 from sqlalchemy import Column, BigInteger, String, Text, Boolean, DateTime, Integer, ForeignKey, JSON, Float
 from sqlalchemy.sql import func
 from app.db.base import Base
@@ -10,9 +10,9 @@ class Call(Base):
     chat_id = Column(BigInteger, ForeignKey("chats.id", ondelete="CASCADE"), nullable=False, index=True)
     caller_id = Column(BigInteger, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     callee_id = Column(BigInteger, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
-    type = Column(String(16), nullable=False)  # voice, video
-    status = Column(String(16), default="ringing")  # ringing, ongoing, ended, missed, rejected
-    channel_name = Column(String(128), nullable=False)  # agora/100ms/twilio
+    type = Column(String(16), nullable=False)
+    status = Column(String(16), default="ringing")
+    channel_name = Column(String(128), nullable=False)
     started_at = Column(DateTime, default=func.now())
     answered_at = Column(DateTime, nullable=True)
     ended_at = Column(DateTime, nullable=True)
@@ -26,7 +26,7 @@ class PhotoScore(Base):
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     user_id = Column(BigInteger, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
     photo_url = Column(String(512), nullable=False)
-    ai_score = Column(Float, default=0.0)  # 0-10
+    ai_score = Column(Float, default=0.0)
     likes_received = Column(Integer, default=0)
     is_best_photo = Column(Boolean, default=False)
     order = Column(Integer, default=0)
@@ -38,7 +38,7 @@ class CompatibilityScore(Base):
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     user1_id = Column(BigInteger, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
     user2_id = Column(BigInteger, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
-    overall_score = Column(Float, default=0.0)  # 0-100
+    overall_score = Column(Float, default=0.0)
     interest_score = Column(Float, default=0.0)
     age_score = Column(Float, default=0.0)
     location_score = Column(Float, default=0.0)
@@ -75,7 +75,7 @@ class ConversationStarter(Base):
     __tablename__ = "conversation_starters"
     id = Column(Integer, primary_key=True, autoincrement=True)
     text = Column(Text, nullable=False)
-    category = Column(String(32), default="general")  # fun, deep, romantic, icebreaker
+    category = Column(String(32), default="general")
     language = Column(String(8), default="uz")
     is_active = Column(Boolean, default=True)
     uses = Column(Integer, default=0)
@@ -86,9 +86,9 @@ class SentimentAnalysis(Base):
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     message_id = Column(BigInteger, ForeignKey("messages.id", ondelete="CASCADE"), nullable=False, index=True)
     user_id = Column(BigInteger, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
-    sentiment = Column(String(16))  # positive, negative, neutral
+    sentiment = Column(String(16))
     score = Column(Float, default=0.0)
-    emotions = Column(JSON, default=dict)  # {"joy": 0.8, "anger": 0.1}
+    emotions = Column(JSON, default=dict)
     is_toxic = Column(Boolean, default=False)
     toxicity_score = Column(Float, default=0.0)
     created_at = Column(DateTime, default=func.now())
@@ -101,7 +101,7 @@ class ChatInsight(Base):
     user1_id = Column(BigInteger, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     user2_id = Column(BigInteger, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     total_messages = Column(Integer, default=0)
-    response_time_avg = Column(Float, default=0.0)  # seconds
+    response_time_avg = Column(Float, default=0.0)
     sentiment_avg = Column(Float, default=0.0)
     conversation_streak = Column(Integer, default=0)
     last_message_at = Column(DateTime, nullable=True)
@@ -115,7 +115,7 @@ class ReferralProgram(Base):
     referrer_id = Column(BigInteger, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
     referee_id = Column(BigInteger, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
     code = Column(String(32), nullable=False)
-    status = Column(String(16), default="pending")  # pending, completed, rewarded
+    status = Column(String(16), default="pending")
     referrer_reward = Column(Integer, default=0)
     referee_reward = Column(Integer, default=0)
     completed_at = Column(DateTime, nullable=True)
