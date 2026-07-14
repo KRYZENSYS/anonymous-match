@@ -1,14 +1,10 @@
-"""Notification, Premium, Admin sxemalari."""
-from __future__ import annotations
-
+"""Notification schemas."""
 from datetime import datetime
-from typing import Optional, List, Literal
-from pydantic import Field
-
-from app.schemas.auth import BaseSchema
+from typing import Literal, Optional
+from pydantic import BaseModel
 
 
-class NotificationPublic(BaseSchema):
+class NotificationPublic(BaseModel):
     id: int
     type: str
     title: str
@@ -19,62 +15,61 @@ class NotificationPublic(BaseSchema):
     created_at: datetime
 
 
-class NotificationListResponse(BaseSchema):
-    notifications: List[NotificationPublic]
+class NotificationListResponse(BaseModel):
+    notifications: list[NotificationPublic]
     unread_count: int
     total: int
     has_more: bool
 
 
-class PremiumStatus(BaseSchema):
+# Premium
+class PremiumStatus(BaseModel):
     is_premium: bool
     tier: str
     started_at: Optional[datetime] = None
     expires_at: Optional[datetime] = None
-    days_left: int = 0
-    auto_renew: bool = False
+    days_left: int
+    auto_renew: bool
     super_likes_remaining: int
     likes_remaining: int
-    boost_count: int = 0
+    boost_count: int
     last_boost_at: Optional[datetime] = None
 
 
-class PremiumPlan(BaseSchema):
-    tier: Literal["plus", "gold", "platinum"]
+class PremiumPlan(BaseModel):
+    tier: str
     name: str
     duration_days: int
     price_stars: int
     price_usd: float
-    features: List[str]
+    features: list[str]
 
 
-class PremiumPlansResponse(BaseSchema):
-    plans: List[PremiumPlan]
+class PremiumPlansResponse(BaseModel):
+    plans: list[PremiumPlan]
 
 
-class PurchaseRequest(BaseSchema):
-    tier: Literal["plus", "gold", "platinum"]
-
-
-class MediaUploadResponse(BaseSchema):
-    id: int
-    type: str
-    url: str
-    thumbnail_url: Optional[str] = None
-    width: Optional[int] = None
-    height: Optional[int] = None
-    size_bytes: Optional[int] = None
-    duration_sec: Optional[int] = None
-
-
-class BoostResponse(BaseSchema):
+class BoostResponse(BaseModel):
     success: bool
     boost_expires_at: Optional[datetime] = None
     remaining_boosts: int
     message: str
 
 
-class AdminStats(BaseSchema):
+# Media
+class MediaUploadResponse(BaseModel):
+    id: int
+    type: str
+    url: str
+    thumbnail_url: Optional[str] = None
+    width: Optional[int] = None
+    height: Optional[int] = None
+    size_bytes: int
+    duration_sec: Optional[int] = None
+
+
+# Admin
+class AdminStats(BaseModel):
     total_users: int
     active_users_today: int
     active_users_week: int
@@ -87,20 +82,20 @@ class AdminStats(BaseSchema):
     online_now: int
 
 
-class BanUserRequest(BaseSchema):
+class BanUserRequest(BaseModel):
     user_id: int
-    reason: str = Field(..., min_length=5, max_length=512)
-    duration_days: Optional[int] = Field(None, ge=1, le=365)
+    reason: str
+    duration_days: Optional[int] = None
 
 
-class SuspendUserRequest(BaseSchema):
+class SuspendUserRequest(BaseModel):
     user_id: int
     reason: str
     until: datetime
 
 
-class BroadcastRequest(BaseSchema):
-    title: str = Field(..., min_length=1, max_length=128)
-    body: str = Field(..., min_length=1, max_length=1024)
+class BroadcastRequest(BaseModel):
+    title: str
+    body: str
     target: Literal["all", "premium", "online", "new_users"] = "all"
     image_url: Optional[str] = None
