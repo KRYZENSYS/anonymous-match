@@ -1,1 +1,1 @@
-# Schemas package
+"""Schemas init — barcha Pydantic schemalar."""
