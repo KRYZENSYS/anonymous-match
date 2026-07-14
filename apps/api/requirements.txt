@@ -1,0 +1,70 @@
+# ===== Core =====
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.1
+python-multipart==0.0.20
+
+# ===== Database =====
+sqlalchemy[asyncio]==2.0.36
+asyncpg==0.30.0
+alembic==1.14.0
+psycopg2-binary==2.9.10
+
+# ===== Cache =====
+redis==5.2.1
+hiredis==3.1.0
+
+# ===== Auth =====
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
+
+# ===== HTTP =====
+httpx==0.28.1
+aiohttp==3.11.11
+requests==2.32.3
+
+# ===== Bot =====
+aiogram==3.15.0
+
+# ===== Validation / Sanitization =====
+email-validator==2.2.0
+bleach==6.2.0
+
+# ===== Storage =====
+cloudinary==1.42.0
+python-magic==0.4.27
+
+# ===== Rate Limit =====
+slowapi==0.1.9
+
+# ===== Logging =====
+loguru==0.7.3
+structlog==24.4.0
+
+# ===== Monitoring =====
+sentry-sdk[fastapi]==2.20.0
+
+# ===== Date/Time =====
+python-dateutil==2.9.0.post0
+pytz==2024.2
+
+# ===== Utils =====
+python-dotenv==1.0.1
+pyyaml==6.0.2
+orjson==3.10.12
+ujson==5.10.0
+
+# ===== Testing =====
+pytest==8.3.4
+pytest-asyncio==0.25.0
+pytest-cov==6.0.0
+httpx==0.28.1
+factory-boy==3.3.1
+faker==33.1.0
+
+# ===== Dev =====
+black==24.10.0
+ruff==0.8.4
+mypy==1.14.0
